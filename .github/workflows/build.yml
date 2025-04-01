@@ -1,0 +1,82 @@
+name: Build and Publish image to ECR
+description: Build and publish Docker image to ECR with SonarQube analysis
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+
+env:    
+  AWS_REGION: us-east-1
+  ECR_REPOSITORY: presigned-lambda-repo
+  ECR_REGISTRY: 913524932573.dkr.ecr.us-east-1.amazonaws.com
+  JAVA_VERSION: 21
+  JAVA_DISTRIBUTION: 'zulu'
+
+jobs:
+  sonar-analysis:
+    name: Run Sonar Analysis
+    runs-on: ubuntu-latest
+    environment: staging
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - uses: actions/setup-java@v4
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: ${{ env.JAVA_DISTRIBUTION }}
+          cache: 'maven'
+      
+      - name: Build and analyze
+        working-directory: ./HackathonFiapPresignedUrl
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          mvn -B verify sonar:sonar \
+            -Dsonar.projectKey=fiap-8soat-tc-one_hackathon-fiap-presigned-url \
+            -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+
+  push-ecr:
+    name: Build&Push Image
+    needs: sonar-analysis
+    runs-on: ubuntu-latest
+    environment: staging
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - uses: aws-actions/amazon-ecr-login@v2
+        id: login-ecr
+
+      - name: Create ECR repository if not exists
+        run: |
+          aws ecr describe-repositories --repository-names ${{ env.ECR_REPOSITORY }} || \
+          aws ecr create-repository --repository-name ${{ env.ECR_REPOSITORY }} || \
+          echo "Repository already exists, continuing..."
+
+      - name: Build and push Docker image into ECR
+        working-directory: ./HackathonFiapPresignedUrl
+        run: |
+          VERSION_TAG=$(date +'%Y%m%d').${{ github.run_number }}
+          
+          docker buildx build \
+            --platform linux/amd64 \
+            --provenance=false \
+            -t ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest \
+            -t ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${VERSION_TAG} \
+            .
+          
+          docker push ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest
+          docker push ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${VERSION_TAG}
