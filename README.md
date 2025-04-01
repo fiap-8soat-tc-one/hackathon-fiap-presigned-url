@@ -1,4 +1,7 @@
 # Lambda Java com URL Pré-assinada do S3 🚀
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=fiap-8soat-tc-one_hackathon-fiap-presigned-url&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=fiap-8soat-tc-one_hackathon-fiap-presigned-url)
+[![SonarQube Cloud](https://sonarcloud.io/images/project_badges/sonarcloud-light.svg)](https://sonarcloud.io/summary/new_code?id=fiap-8soat-tc-one_hackathon-fiap-presigned-url)
+[![Build and Publish image to ECR](https://github.com/fiap-8soat-tc-one/hackathon-fiap-presigned-url/actions/workflows/build.yml/badge.svg)](https://github.com/fiap-8soat-tc-one/hackathon-fiap-presigned-url/actions/workflows/build.yml)
 
 ## 📘 Visão Geral
 
