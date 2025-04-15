@@ -1,19 +1,19 @@
 {
-  "body": "{\"message\": \"hello world\"}",
+  "body": "{\"test\":\"body\"}",
   "resource": "/{proxy+}",
   "path": "/path/to/resource",
   "httpMethod": "POST",
-  "isBase64Encoded": false,
   "queryStringParameters": {
     "foo": "bar"
   },
   "pathParameters": {
-    "proxy": "/path/to/resource"
+    "proxy": "path/to/resource"
   },
   "stageVariables": {
     "baz": "qux"
   },
   "headers": {
+    "Authorization": "Bearer eyJraWQiOiJJK0h4Uks0Zmc4U3U1SEQ3U3RcL29mQmhpbUhURTlZcXh4SXpnTTh4WEpZRT0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI0NGE4MjQzOC1kMGUxLTcwYzAtYTBjNy1mODNkNDQ5MGY3ZTAiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tXC91cy1lYXN0LTFfN2d5Smk4TTFhIiwiY29nbml0bzp1c2VybmFtZSI6ImZpYXBAZmlhcC5jb20iLCJvcmlnaW5fanRpIjoiNWJmOTY0YWUtNzE0OS00MzBmLTgyODUtNDNjYWRkMTQ5YTFmIiwiYXVkIjoiNzZzYzdoNWN2NW5xYjJvbmFhdjgyNTIybmIiLCJldmVudF9pZCI6IjZjZGNiZWUyLWVjODYtNGIxMy05OGI1LTk0OTBhYWIzN2U4MSIsInRva2VuX3VzZSI6ImlkIiwiYXV0aF90aW1lIjoxNzQ0NzIwMTgxLCJleHAiOjE3NDQ3MjM3ODEsImlhdCI6MTc0NDcyMDE4MSwianRpIjoiZTk2NzQ4Y2ItYTcxZS00NmIyLTgzYTYtOTZjNjdmODY4MzA0IiwiZW1haWwiOiJmaWFwQGZpYXAuY29tIn0.bvZtthyepbACD2-ykIySXAofcmzXD6TdCXaLLsqhJ8nnm8VbbA9RRTNFQImaeppUUFE1WHaPVkResmob7Zxo1w9rdqrpBA5HP1SIKcC8BaPF0VROd8BHVA1yfeyW4POldfRwCEB3iXpPQ3q42toKWPEtTreKYod22ZFRYTbpdZXAFtr04DCaR4-hpGIcdewJ7o7hGbOc1fbZRw0dkdg9HAF_X_gnU4VmVS_wsjvts-IkqUuTUI-1V-F17QaOC5EwUAPrtZbpJVqy8DaAfaw7mzwGsVVXJ5tMahZLclVP0FCOZDYrg6GUiHPUCOy_8rvtbUcNJ3hC6Q79G6feZ53EJQ",
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
     "Accept-Encoding": "gzip, deflate, sdch",
     "Accept-Language": "en-US,en;q=0.8",
@@ -24,7 +24,7 @@
     "CloudFront-Is-SmartTV-Viewer": "false",
     "CloudFront-Is-Tablet-Viewer": "false",
     "CloudFront-Viewer-Country": "US",
-    "Host": "1234567890.execute-api.us-east-1.amazonaws.com",
+    "Host": "1234567890.execute-api.{dns_suffix}",
     "Upgrade-Insecure-Requests": "1",
     "User-Agent": "Custom User Agent String",
     "Via": "1.1 08f323deadbeefa7af34d5feb414ce27.cloudfront.net (CloudFront)",
@@ -38,14 +38,12 @@
     "resourceId": "123456",
     "stage": "prod",
     "requestId": "c6af9ac6-7b61-11e6-9a41-93e8deadbeef",
-    "requestTime": "09/Apr/2015:12:34:56 +0000",
-    "requestTimeEpoch": 1428582896000,
     "identity": {
       "cognitoIdentityPoolId": null,
       "accountId": null,
       "cognitoIdentityId": null,
       "caller": null,
-      "accessKey": null,
+      "apiKey": null,
       "sourceIp": "127.0.0.1",
       "cognitoAuthenticationType": null,
       "cognitoAuthenticationProvider": null,
@@ -53,11 +51,8 @@
       "userAgent": "Custom User Agent String",
       "user": null
     },
-    "path": "/prod/path/to/resource",
     "resourcePath": "/{proxy+}",
     "httpMethod": "POST",
-    "apiId": "1234567890",
-    "protocol": "HTTP/1.1"
+    "apiId": "1234567890"
   }
 }
-  
