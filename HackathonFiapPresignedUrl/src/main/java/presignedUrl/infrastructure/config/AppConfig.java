@@ -1,7 +1,5 @@
 package presignedUrl.infrastructure.config;
 
-import presignedUrl.domain.exception.PresignedUrlException;
-
 public class AppConfig {
     private static final AppConfig INSTANCE = new AppConfig();
     
@@ -10,7 +8,7 @@ public class AppConfig {
     private final long maxFileSize;
 
     private AppConfig() {
-        this.bucketName = getRequiredEnv("BUCKET_NAME");
+        this.bucketName = getRequiredEnv();
         this.expirationTimeInMinutes = Integer.parseInt(
             getEnvWithDefault("EXPIRATION_TIME_IN_MINUTES", "10")
         );
@@ -23,10 +21,10 @@ public class AppConfig {
         return INSTANCE;
     }
 
-    private String getRequiredEnv(String key) {
-        String value = System.getenv(key);
+    private String getRequiredEnv() {
+        String value = System.getenv("BUCKET_NAME");
         if (value == null || value.trim().isEmpty()) {
-            throw new PresignedUrlException(key + " environment variable must be set");
+            return "bucket-fiap-hackaton-t32-files";
         }
         return value;
     }

@@ -27,7 +27,7 @@ public class S3StorageService implements StorageService {
     @Override
     public URL generatePresignedUrl(String fileKey, int expirationMinutes) {
         try {
-            Date expiration = new Date(System.currentTimeMillis() + expirationMinutes * 60 * 1000);
+            Date expiration = new Date(System.currentTimeMillis() + (long) expirationMinutes * 60 * 1000);
             return s3Client.generatePresignedUrl(bucketName, fileKey, expiration, HttpMethod.PUT);
         } catch (SdkClientException e) {
             throw new PresignedUrlException("Failed to generate presigned URL", e);
