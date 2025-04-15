@@ -33,9 +33,4 @@ public class S3StorageService implements StorageService {
             throw new PresignedUrlException("Failed to generate presigned URL", e);
         }
     }
-
-    // Package private for testing
-    AmazonS3 getS3Client() {
-        return s3Client;
-    }
 }
