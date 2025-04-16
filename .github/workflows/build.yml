@@ -19,6 +19,7 @@ jobs:
   sonar-analysis:
     name: Run Sonar Analysis
     runs-on: ubuntu-latest
+    environment: staging
 
     steps:
       - uses: actions/checkout@v4
@@ -45,6 +46,7 @@ jobs:
     name: Build&Push Image
     needs: sonar-analysis
     runs-on: ubuntu-latest
+    environment: staging
 
     steps:
       - uses: actions/checkout@v4
