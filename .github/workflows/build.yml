@@ -1,5 +1,4 @@
 name: Build and Publish image to ECR
-description: Build and publish Docker image to ECR with SonarQube analysis
 
 on:
   push:
