@@ -6,14 +6,14 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import presignedUrl.application.port.StorageService;
-import presignedUrl.application.port.DynamoDBService;
+import presignedUrl.application.port.DynamoDBServiceSpec;
+import presignedUrl.application.port.StorageServiceSpec;
 import presignedUrl.domain.exception.PresignedUrlException;
 import presignedUrl.domain.model.PresignedUrlResponse;
 import presignedUrl.domain.model.UploadRecord;
 import presignedUrl.infrastructure.JwtService;
-import presignedUrl.infrastructure.S3StorageService;
-import presignedUrl.infrastructure.DynamoDBServiceImpl;
+import presignedUrl.infrastructure.StorageService;
+import presignedUrl.infrastructure.DynamoDBService;
 import presignedUrl.infrastructure.config.AppConfig;
 
 import java.net.URL;
@@ -21,18 +21,18 @@ import java.time.Instant;
 import java.util.*;
 
 public class LambdaHandler implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
-    private final StorageService storageService;
+    private final StorageServiceSpec storageService;
     private final JwtService jwtService;
     private final ObjectMapper objectMapper;
     private final AppConfig config;
-    private final DynamoDBService dynamoDBService;
+    private final DynamoDBServiceSpec dynamoDBService;
 
     public LambdaHandler() {
         this.objectMapper = new ObjectMapper();
-        this.storageService = new S3StorageService();
+        this.storageService = new StorageService();
         this.jwtService = new JwtService(objectMapper);
         this.config = AppConfig.getInstance();
-        this.dynamoDBService = new DynamoDBServiceImpl();
+        this.dynamoDBService = new DynamoDBService();
     }
 
     @Override

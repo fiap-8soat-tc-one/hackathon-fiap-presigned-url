@@ -4,18 +4,18 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.PutItemRequest;
-import presignedUrl.application.port.DynamoDBService;
+import presignedUrl.application.port.DynamoDBServiceSpec;
 import presignedUrl.domain.exception.PresignedUrlException;
 import presignedUrl.domain.model.UploadRecord;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class DynamoDBServiceImpl implements DynamoDBService {
+public class DynamoDBService implements DynamoDBServiceSpec {
     private final AmazonDynamoDB dynamoDBClient;
     private static final String TABLE_NAME = "fiap-hackaton-uploads";
 
-    public DynamoDBServiceImpl() {
+    public DynamoDBService() {
         this.dynamoDBClient = AmazonDynamoDBClientBuilder.standard().build();
     }
 
